@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Climbs in Vienna</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+        crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+        integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+        crossorigin=""></script>
+    <!-- Decoder: -->
+    <script type="text/javascript" src="https://rawgit.com/jieter/Leaflet.encoded/master/Polyline.encoded.js"></script>
+  </head>
+<body>
+<div id="mapid"></div>
+
+
+<!-- Modal cover -->
+<div id="modal">
+<!-- Modal content -->
+<div id="editor">
+  <form>
+   <span id="closemodal" onclick="hideEditor()">&times;</span>
+   <fieldset><legend>Climb editor:</legend>
+    <input type="hidden" id="e_nr" value="-1">
+ 
+    <table>
+      <tr><th>Name:</th><td><input type="text" id="e_name"></td></tr>
+      <tr><th>Strava Name:</th><td><input type="text" id="e_sname" disabled="true"></td></tr>
+      <tr><th>Region:</th><td><input type="text" id="e_region"></td></tr>
+      <tr><th>Härte:</th><td><input type="number" id="e_haerte" value="1" min="1" max="5"> Sterne</td></tr>
+      <tr><th>Schönheit:</th><td><input type="number" id="e_schoenheit" value="1" min="1" max="5"> Sterne</td></tr>
+      <tr><th>Beschreibung:</th><td><textarea id="e_beschreibung" rows="12"
+                          onkeyup="editedEvent()">…</textarea></td></tr>
+      </table>
+      <button id="e_button" type="button" onclick="saveClimb(this)">Save</button>
+   </fieldset>
+  </form>
+</div><!-- Modal content -->
+</div><!-- Modal cover -->
+
+
+<div id="filter">
+   <fieldset><legend>Suche:</legend>
+    <table>
+    <tr>
+        <th>Name:</th><td><input type="text" id="f_text" onkeyup="doFilter()"></td>
+        <th>Härte:</th><td><form id="f_hmin">&nbsp;</form> — <form id="f_hmax">&nbsp;</form></td>
+    </tr><tr>
+        <th>Region:</th><td><input type="text" id="f_region" onkeyup="doFilter()"></td>
+        <th>Schönheit:</th><td><form id="f_smin">&nbsp;</form> — <form id="f_smax">&nbsp;</form></td>
+    </tr><tr>
+        <th>Höhenmeter:</th><td>
+            <input type="number" id="f_minhm" value="" min="0" onkeyup="doFilter()" onchange="doFilter()">m –
+            <input type="number" id="f_maxhm" value="" min="0" onkeyup="doFilter()" onchange="doFilter()">m
+        </td>
+        <th>Belag:</th><td><form id="f_amin">&nbsp;</form> — <form id="f_amax">&nbsp;</form></td>
+    </tr><tr>
+        <th>Steigung:</th><td>
+            <input type="number" id="f_mingrad" value="" min="0" onkeyup="doFilter()" onchange="doFilter()">%&nbsp; –
+            <input type="number" id="f_maxgrad" value="" min="0" onkeyup="doFilter()" onchange="doFilter()">%
+        </td>
+        <th>Zufahrt:</th><td><form id="f_zufahrt" onclick="doFilter()">
+                <input type="radio" id="l_1" name="legal" value="1"/>
+                <label for="l_1" >Legal</label>
+                <input type="radio" id="l_2" name="legal" value="2"/>
+                <label for="l_2" >Illegal</label>
+                <input type="radio" id="l_3" name="legal" value="3" checked="checked"/>
+                <label for="l_3">Egal</label>
+            </form></td>
+        
+    </tr>
+
+    </table>
+   </fieldset>
+</div>
+
+<div id="listediv">
+<table id="liste"></table>
+</div>
+<script src="main.js"></script>
+
+<!--
+<script>
+function allowDrop(ev) {
+    ev.preventDefault();
+    ev.target.style.color = "red";
+}
+
+function drop(ev) {
+    ev.preventDefault();
+    
+    for(let file of ev.dataTransfer.files)
+    {
+        if(file.size < 1000) {
+            var reader = new FileReader();
+            reader.onload = function(evt) {
+                console.log(evt.target.result);
+                nr = parseInt(evt.target.result.replace(/^.*segments\//, ''));
+                if(nr > 0)
+                {
+                    console.log("Import Event: " + nr);
+                    ev.target.innerHTML = "Import Event: " + nr;
+                }
+            };
+            reader.readAsText(file);
+        }
+    }
+}
+</script>
+<div id="dropper" style="width: 100vw; height: 5vh;" ondrop="drop(event)" ondragover="allowDrop(event)">
+Drop a link here!</div>
+-->
+
+<!--
+<iframe style="width:500px;height:600px;" src="https://veloviewer.com/segments/6819875/embed2?default2d=y" frameborder="0" scrolling="no"></iframe>
+-->
+
+</body>
+</html>

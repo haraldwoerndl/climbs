@@ -1,0 +1,176 @@
+body {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	margin: 0;
+    font-size: 11pt;
+}
+th, td {
+	vertical-align: top;
+}
+
+#mapid {
+	width: 100%; height: 50vh;
+}
+
+/*** LISTE ***/
+#liste {
+	border-collapse: collapse;
+	margin: 1ex 0 1ex 0;
+    min-width: 100%;
+}
+#liste tr {
+	border-bottom: 1px dotted gray;
+}
+#liste tr:nth-child(even) {
+	background-color: #f2f2f2;
+}
+#liste tr:hover {
+	background-color: #ddd;
+}
+#liste th {
+    background-color: #ccc;
+    padding: 5px 2ex 5px 2ex;
+}
+#liste th:hover {
+    background-color: #999;
+    color: white;
+}
+#liste td {
+	padding: 3px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+#liste tr.selected {
+	background-color: #faa;
+}
+#liste tr.selected:hover {
+	background-color: #f88;
+}
+#liste tr td:nth-child(1) { /* id */
+    font-size: 80%;
+    padding-top: 6px;
+    color: gray;
+}
+#liste tr td:nth-child(2) { /* name */
+	max-width: 30ex;
+}
+#liste tr td:nth-child(1n+3) {
+	text-align: center;
+}
+#liste tr td:nth-child(1n+7) { /* stars */
+    font-size: 50%;
+    padding-top: 7px;
+}
+#liste tr td:nth-child(10) { /* Lega */
+    font-size: 100%;
+}
+
+/*** Editor ***/
+
+/* The modal background (partly from w3school) */
+#modal {
+    display: none;
+    Xposition: fixed;
+    z-index: 3;
+    Xleft: 0;
+    Xtop: 0;
+    margin: 0;
+    Xwidth: 100vw;
+    Xheight: 100vh;
+    overflow: none;
+    background-color: rgb(0,0,0);
+    background-color: rgba(240,240,240,0.8);
+}
+/* The Close Button */
+#closemodal {
+    color: #aaaaaa;
+    float: right;
+    font-size: 40px;
+    font-weight: bold;
+    padding-left: 20px;
+}
+
+#closemodal:hover, #closemodal:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#editor {
+    background-color: pearlwhite;
+    margin: auto;
+    padding: 10px;
+}
+#editor fieldset {
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+}
+#editor input, #editor select, #editor textarea {
+    font-size: 100%;
+}
+#editor th {
+    text-align: right;
+    padding-top: 5px;
+    padding-right: 10px;
+}
+#editor button {
+    float: right;
+    font-size: 100%;
+    color: #700;
+}
+#e_name, #e_sname, #e_region, #e_beschreibung {
+    width: 27em;
+}
+#e_haerte, #e_schoenheit {
+    width: 10em;
+}
+
+/*** FILTER ***/
+
+#filter th {
+    text-align: right;
+    padding: 0 1em 0 2em;
+}
+#f_minhm, #f_maxhm, #f_mingrad, #f_maxgrad {
+    width: 10em;
+}
+#filter input#f_text, #filter input#f_region {
+    width: 30em;
+}
+#filter fieldset {
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+}
+
+/*** STERNE ***/
+
+/* Based on https://codepen.io/jamesbarnett/pen/vlpkh */
+.rating {
+  border: none;
+  padding: 0;
+  margin: 0 1ex 0 1ex;
+  display: inline-block;
+}
+
+.rating > input { display: none; }
+.rating > label:before {
+  margin: 1px;
+  display: inline-block;
+  content: '\2605';
+}
+
+.rating > label {
+  color: #eee;
+  float: right;
+}
+
+/* CSS Magic to Highlight Stars on Hover */
+.rating > input:checked ~ label, /* show gold star when clicked */
+.rating:not(:checked) > label:hover, /* hover current star */
+.rating:not(:checked) > label:hover ~ label /* hover previous stars in list */
+{
+    color: #FFD700;
+}
