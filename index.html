@@ -12,38 +12,15 @@
         crossorigin=""></script>
     <!-- Decoder: -->
     <script type="text/javascript" src="https://rawgit.com/jieter/Leaflet.encoded/master/Polyline.encoded.js"></script>
+    
+    <script src="main.js"></script>
   </head>
 <body>
-
-
-<!-- Modal cover -->
-<div id="modal">
-<!-- Modal content -->
-<div id="editor">
-  <form>
-   <span id="closemodal" onclick="hideEditor()">&times;</span>
-   <fieldset><legend>Climb editor:</legend>
-    <input type="hidden" id="e_nr" value="-1">
- 
-    <table>
-      <tr><th>Name:</th><td><input type="text" id="e_name"></td></tr>
-      <tr><th>Strava Name:</th><td><input type="text" id="e_sname" disabled="true"></td></tr>
-      <tr><th>Region:</th><td><input type="text" id="e_region"></td></tr>
-      <tr><th>Härte:</th><td><input type="number" id="e_haerte" value="1" min="1" max="5"> Sterne</td></tr>
-      <tr><th>Schönheit:</th><td><input type="number" id="e_schoenheit" value="1" min="1" max="5"> Sterne</td></tr>
-      <tr><th>Beschreibung:</th><td><textarea id="e_beschreibung" rows="12"
-                          onkeyup="editedEvent()">…</textarea></td></tr>
-      </table>
-      <button id="e_button" type="button" onclick="saveClimb(this)">Save</button>
-   </fieldset>
-  </form>
-</div><!-- Modal content -->
-</div><!-- Modal cover -->
 
 <div id="layout">
 
 <div id="head">
-    <p>Der Kopf</p>
+    <h2>Climbs in Vienna</h2>
 </div>
 
 <div id="filter">
@@ -74,10 +51,15 @@
 <div id="mapid"></div>
 
 <div id="listediv">
-<table id="liste"></table>
+    <table id="liste"></table>
 </div>
 </div><!-- layout -->
-<script src="main.js"></script>
+
+<script>
+    initLeafletMap();
+    loadClimbs();
+    makeMyForms();
+</script>
 
 <!--
 <script>
@@ -110,10 +92,5 @@ function drop(ev) {
 <div id="dropper" style="width: 100vw; height: 5vh;" ondrop="drop(event)" ondragover="allowDrop(event)">
 Drop a link here!</div>
 -->
-
-<!--
-<iframe style="width:500px;height:600px;" src="https://veloviewer.com/segments/6819875/embed2?default2d=y" frameborder="0" scrolling="no"></iframe>
--->
-
 </body>
 </html>

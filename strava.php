@@ -15,6 +15,33 @@ $stravaOptions = [
 ];
 */
 
+/*
+     CREATE TABLE climb (
+     id       INTEGER PRIMARY KEY,   -- gleich segment-id
+     name     TEXT NOT NULL,
+     sname    TEXT NOT NULL,
+     beschreibung    TEXT,
+     distance   FLOAT,
+     grade_avg  FLOAT,
+     grade_max  FLOAT,
+     elev_high  FLOAT,
+     elev_low   FLOAT,
+     elev_gain  FLOAT,
+ 
+     start_lat   FLOAT,
+     start_lon   FLOAT,
+     end_lat     FLOAT,
+     end_lon     FLOAT,
+ 
+     polyline    TEXT,
+ 
+     haerte     INTEGER,
+     schoenheit INTEGER,
+     tarmac     INTEGER,
+     region     TEXT,
+     rules      TEXT
+     );
+ */
 
 function getToken()
 {
@@ -126,35 +153,6 @@ function getSegmentFromStrava($nr)
     $c->setStrava(json_decode($erg));
     return $c;
 }
-
-    
-/*
-     CREATE TABLE climb (
-     id       INTEGER PRIMARY KEY,   -- gleich segment-id
-     name     TEXT NOT NULL,
-     sname    TEXT NOT NULL,
-     beschreibung    TEXT,
-     distance   FLOAT,
-     grade_avg  FLOAT,
-     grade_max  FLOAT,
-     elev_high  FLOAT,
-     elev_low   FLOAT,
-     elev_gain  FLOAT,
-     
-     start_lat   FLOAT,
-     start_lon   FLOAT,
-     end_lat     FLOAT,
-     end_lon     FLOAT,
-     
-     polyline    TEXT,
- 
-     haerte     INTEGER,
-     schoenheit INTEGER,
-     tarmac     INTEGER,
-     region     TEXT,
-     rules      TEXT
-     );
- */
 
     
 function getSegmentFromDB($nr)

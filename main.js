@@ -14,21 +14,23 @@ rating = { 1: "★☆☆☆☆", 2: "★★☆☆☆", 3: "★★★☆☆", 4: 
     ⛔🚫🚳🚶  🚴  ☹☺✓
 */
 
-var map = L.map('mapid');
-
-map.fitBounds([
-               [48.239495, 16.297339],
-               [48.339495, 16.197339]
-               ]);
-L.tileLayer(
-            'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 18,
-            }).addTo(map);
-
-loadClimbs();
-makeMyForms();
-
+// some globals:
+var map;
 var climbs = false;
+
+function initLeafletMap() {
+    map = L.map('mapid');
+
+    map.fitBounds([
+                   [48.239495, 16.297339],
+                   [48.339495, 16.197339]
+                   ]);
+    L.tileLayer(
+                'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 18,
+                }).addTo(map);
+}
+
 
 function centerMap()
 {
@@ -188,7 +190,6 @@ function doFilter()
 
 
 /*********** CREATE List: ***********/
-
 var selectedPL = false;
 function clickOnClimb(climb, openPopup=false) // in map or in list
 {
@@ -241,17 +242,17 @@ function loadClimbs() {
                                                lineJoin: 'round',
                                                bubblingMouseEvents: false }).addTo(map);
                 pl.climb = climb;
-                pl.on('click', function(me) { clickOnClimb(me.target.climb, true); });
+                pl.on('click', function(me) { clickOnClimb(climb, true); });
 
                 // Marker:
                 m = L.marker([climb.end_lat, climb.end_lon], {icon: finishIcon}).addTo(map);
-                m.bindPopup("<a href=\"climb.php?id=" + climb.id + "\">" + climb.name + "</a> "+ climb.id);
+                m.bindPopup("<a href=\"nirvana.html?id=" + climb.id + "\" target=\"climb\">" + climb.name + "</a> "+ climb.id);
                 m.climb = climb;
                 
                 // Table-Row:
                 row = t.insertRow(-1);
                 row.insertCell(-1).innerHTML = climb.id;
-                row.insertCell(-1).innerHTML = climb.name;
+                row.insertCell(-1).innerHTML = "<a href=\"nirvana.html?id=" + climb.id + "\" target=\"climb\">" + climb.name + "</a>";
                 row.insertCell(-1).innerHTML = climb.region ? climb.region : "-";
                 row.insertCell(-1).innerHTML = climb.grade_avg;
                 row.insertCell(-1).innerHTML = Math.round(climb.elev_high - climb.elev_low); // climb.elev_gain; ist oft leer
@@ -265,7 +266,7 @@ function loadClimbs() {
                 row.insertCell(-1).innerHTML = (climb.rules && climb.rules != "") ? climb.rules : "✓";
                 row.climb = climb;
                 
-                row.addEventListener('click', function(e) { clickOnClimb(e.target.parentNode.climb); });
+                row.addEventListener('click', function(e) { clickOnClimb(climb); });
                 
                 // create cross references:
                 climb.pl = pl;
@@ -285,7 +286,7 @@ function loadClimbs() {
 /*** Fill out a given form-Object (with ID): ***/
 function makeStarsForm(form)
 {
-    id = form.id;
+    var id = form.id;
     pattern = '<input type="radio" id="s5_NN" name="stars" value="5"/> \
                <label for="s5_NN" ></label> \
                <input type="radio" id="s4_NN" name="stars" value="4"/> \
@@ -315,4 +316,111 @@ function makeMyForms() {
     document.forms.f_smax.elements.stars.value = 5;
     document.forms.f_amin.elements.stars.value = 1;
     document.forms.f_amax.elements.stars.value = 5;
+}
+
+
+/*** used by nirvana.html: ***/
+
+
+var oneClimb = null;    // the climb which was loaded
+
+function loadClimb(id) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log(this.responseText);
+            climb = JSON.parse(this.responseText);
+
+            // Table-Row:
+            $('i_id').innerHTML = climb.id;
+            $('i_name').innerHTML = climb.name;
+            $('i_sname').innerHTML = climb.sname;
+            $('i_region').innerHTML = climb.region;
+            $('i_grade').innerHTML = climb.grade_avg + "%, max. " + climb.grade_max + "%";
+            $('i_hm').innerHTML = Math.round(climb.elev_high - climb.elev_low) + " hm";
+            $('i_dist').innerHTML = Math.round(climb.distance)  + " m";
+            
+            hp = Math.round(climb.distance * climb.grade_avg * climb.grade_avg / 1000);
+            $('i_haerte').innerHTML = " (" + hp + ")";
+            $('i_rules').innerHTML = (climb.rules && climb.rules != "") ? climb.rules : "✓";
+            $('i_descr').innerHTML = climb.beschreibung;
+            
+            oneClimb = climb;
+            updateClimbStars();
+        }
+    };
+    xhttp.open("GET", "climbs.json.php?id=" + id, true);
+    xhttp.send();
+}
+
+function makeEditable(element, editable=true)
+{
+    element.contentEditable = editable;
+    if(editable)
+        element.classList.add('editmode');
+    else
+        element.classList.remove('editmode');
+}
+
+function saveChanges(button, climb)
+{
+    button.innerHTML = "saving..."
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            button.innerHTML = "edit";
+            button.disabled = false;
+
+            console.log(this.responseText);
+        }
+    };
+    xhttp.open("POST", "edit_climb.php", true);
+    xhttp.setRequestHeader('Content-Type', 'application/json')
+    xhttp.send(JSON.stringify(oneClimb));
+}
+
+function updateClimbStars() {
+    if(!$('editButton').editmode) {
+        document.forms.f_haerte.elements.stars.value = oneClimb.haerte;
+        document.forms.f_schoenheit.elements.stars.value = oneClimb.schoenheit;
+        document.forms.f_tarmac.elements.stars.value = oneClimb.tarmac;
+    } else {
+        oneClimb.haerte = document.forms.f_haerte.elements.stars.value;
+        oneClimb.schoenheit = document.forms.f_schoenheit.elements.stars.value;
+        oneClimb.tarmac = document.forms.f_tarmac.elements.stars.value;
+    }
+}
+
+function startEditing(button) {
+    if(button.editmode) // Finish Editing
+    {
+        makeEditable($('i_name'), false);
+        makeEditable($('i_descr'), false);
+        makeEditable($('i_rules'), false);
+        makeEditable($('i_region'), false);
+        $('f_haerte').parentNode.classList.remove('editmode');
+        $('f_schoenheit').parentNode.classList.remove('editmode');
+        $('f_tarmac').parentNode.classList.remove('editmode');
+
+        oneClimb.name = $('i_name').innerHTML;
+        oneClimb.beschreibung = $('i_descr').innerHTML;
+        oneClimb.rules = $('i_rules').innerHTML;
+        oneClimb.region = $('i_region').innerHTML;
+
+        button.disabled = true;
+        button.editmode = false;
+        saveChanges(button, oneClimb);
+    }
+    else
+    {
+        makeEditable($('i_name'));
+        makeEditable($('i_descr'));
+        makeEditable($('i_rules'));
+        makeEditable($('i_region'));
+        $('f_haerte').parentNode.classList.add('editmode');
+        $('f_schoenheit').parentNode.classList.add('editmode');
+        $('f_tarmac').parentNode.classList.add('editmode');
+        button.innerHTML = "save"
+        button.editmode = true;
+    }
 }
