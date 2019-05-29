@@ -204,7 +204,7 @@ function clickOnClimb(climb, openPopup=false) // in map or in list
     if(openPopup)
         climb.m.openPopup();
     climb.tablerow.classList.add('selected');
-    climb.tablerow.scrollIntoView();
+    climb.tablerow.scrollIntoViewIfNeeded({behavior: "smooth"});
 }
 
 function loadClimbs() {
