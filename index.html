@@ -14,7 +14,6 @@
     <script type="text/javascript" src="https://rawgit.com/jieter/Leaflet.encoded/master/Polyline.encoded.js"></script>
   </head>
 <body>
-<div id="mapid"></div>
 
 
 <!-- Modal cover -->
@@ -41,45 +40,43 @@
 </div><!-- Modal content -->
 </div><!-- Modal cover -->
 
+<div id="layout">
+
+<div id="head">
+    <h1>Der Kopf</h1>
+</div>
 
 <div id="filter">
-   <fieldset><legend>Suche:</legend>
-    <table>
-    <tr>
-        <th>Name:</th><td><input type="text" id="f_text" onkeyup="doFilter()"></td>
-        <th>Härte:</th><td><form id="f_hmin">&nbsp;</form> — <form id="f_hmax">&nbsp;</form></td>
-    </tr><tr>
-        <th>Region:</th><td><input type="text" id="f_region" onkeyup="doFilter()"></td>
-        <th>Schönheit:</th><td><form id="f_smin">&nbsp;</form> — <form id="f_smax">&nbsp;</form></td>
-    </tr><tr>
-        <th>Höhenmeter:</th><td>
+        <div><span class="sTit">Name:</span><input type="text" id="f_text" onkeyup="doFilter()"></div>
+        <div><span class="sTit">Härte:</span><form id="f_hmin">&nbsp;</form> — <form id="f_hmax">&nbsp;</form></div>
+        <div><span class="sTit">Region:</span><input type="text" id="f_region" onkeyup="doFilter()"></div>
+        <div><span class="sTit">Schönheit:</span><form id="f_smin">&nbsp;</form> — <form id="f_smax">&nbsp;</form></div>
+        <div><span class="sTit">Höhenmeter:</span>
             <input type="number" id="f_minhm" value="" min="0" onkeyup="doFilter()" onchange="doFilter()">m –
             <input type="number" id="f_maxhm" value="" min="0" onkeyup="doFilter()" onchange="doFilter()">m
-        </td>
-        <th>Belag:</th><td><form id="f_amin">&nbsp;</form> — <form id="f_amax">&nbsp;</form></td>
-    </tr><tr>
-        <th>Steigung:</th><td>
+        </div>
+        <div><span class="sTit">Belag:</span><form id="f_amin">&nbsp;</form> — <form id="f_amax">&nbsp;</form></div>
+        <div><span class="sTit">Steigung:</span>
             <input type="number" id="f_mingrad" value="" min="0" onkeyup="doFilter()" onchange="doFilter()">%&nbsp; –
             <input type="number" id="f_maxgrad" value="" min="0" onkeyup="doFilter()" onchange="doFilter()">%
-        </td>
-        <th>Zufahrt:</th><td><form id="f_zufahrt" onclick="doFilter()">
+        </div>
+        <div><span class="sTit">Zufahrt:</span> &nbsp; <form id="f_zufahrt" onclick="doFilter()">
                 <input type="radio" id="l_1" name="legal" value="1"/>
                 <label for="l_1" >Legal</label>
                 <input type="radio" id="l_2" name="legal" value="2"/>
                 <label for="l_2" >Illegal</label>
                 <input type="radio" id="l_3" name="legal" value="3" checked="checked"/>
                 <label for="l_3">Egal</label>
-            </form></td>
+            </form></div>
         
-    </tr>
-
-    </table>
-   </fieldset>
 </div>
+
+<div id="mapid"></div>
 
 <div id="listediv">
 <table id="liste"></table>
 </div>
+</div><!-- layout -->
 <script src="main.js"></script>
 
 <!--

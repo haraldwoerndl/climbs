@@ -6,11 +6,6 @@ body {
 th, td {
 	vertical-align: top;
 }
-
-#mapid {
-	width: 100%; height: 50vh;
-}
-
 /*** LISTE ***/
 #liste {
 	border-collapse: collapse;
@@ -134,10 +129,10 @@ th, td {
     padding: 0 1em 0 2em;
 }
 #f_minhm, #f_maxhm, #f_mingrad, #f_maxgrad {
-    width: 10em;
+    width: 9em;
 }
 #filter input#f_text, #filter input#f_region {
-    width: 30em;
+    width: 20em;
 }
 #filter fieldset {
     border-bottom: none;
@@ -173,4 +168,49 @@ th, td {
 .rating:not(:checked) > label:hover ~ label /* hover previous stars in list */
 {
     color: #FFD700;
+}
+
+
+
+/*** GRID LAYOUT: ***/
+#filter {
+    display: inline-grid;
+    grid-template-columns: auto;
+    vertical-align: top;
+    justify-content: start;
+    align-content: space-around;
+    grid-gap: 1px;
+    padding-left: 2ex;
+}
+#filter .sTit {
+    /*min-width: 13ex;
+    text-align: right;
+    display: inline-block;*/
+    display: block;
+    vertical-align: top;
+}
+#filter form {
+    display: inline-block;
+    vertical-align: top;
+}
+
+#layout {
+    display: grid;
+    grid-template-columns: 20em auto  ;
+    grid-template-rows: 50px auto 40vh;
+    height: 100vh;
+}
+#head {
+    grid-area: 1/1 / 2/3;
+    background: lightgray;
+}
+#filter {
+    grid-area: 2/1 / 3/2;
+}
+#mapid {
+    grid-area: 2/2 / 3/3;
+}
+#listediv {
+    grid-area: 3/1 / 4/3;
+    overflow: scroll;
 }
