@@ -57,7 +57,7 @@ function centerMap()
 /*********** SORT List: ***********/
 
 function rulesToInt(rule) {
-    if(rule == null || rule == "")
+    if(rule == null || rule == "" || rule == "✓")
         return 0;
     if(rule == "🚫") return 1;
     if(rule == "🚳") return 2;
@@ -161,9 +161,9 @@ function doFilter()
                     throw 0;
             if((climb.tarmac) && (climb.tarmac < min_a || climb.tarmac > max_a))
                     throw 0;
-            if((legal == 2) && (!climb.rules || climb.rules == ""))   // nur illegal
+            if((legal == 2) && (!climb.rules || climb.rules == "" || climb.rules == "✓"))   // nur illegal
                     throw 0;
-            if((legal == 1) && (climb.rules && climb.rules != ""))    // nur legal
+            if((legal == 1) && (climb.rules && climb.rules != "" && climb.rules != "✓"))    // nur legal
                     throw 0;
         } catch(err) {
             rows[i].style.display = "none";

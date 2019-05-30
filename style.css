@@ -68,20 +68,11 @@ th, td {
 
 /*** FILTER ***/
 
-#filter th {
-    text-align: right;
-    padding: 0 1em 0 2em;
-}
 #f_minhm, #f_maxhm, #f_mingrad, #f_maxgrad {
     width: 9em;
 }
 #filter input#f_text, #filter input#f_region {
     width: 20em;
-}
-#filter fieldset {
-    border-bottom: none;
-    border-left: none;
-    border-right: none;
 }
 
 /*** STERNE ***/
@@ -122,7 +113,7 @@ th, td {
     grid-template-columns: auto;
     vertical-align: top;
     justify-content: start;
-    align-content: space-around;
+    align-content: center;
     grid-gap: 1px;
     padding-left: 2ex;
 }
@@ -130,6 +121,7 @@ th, td {
     /*min-width: 13ex;
     text-align: right;
     display: inline-block;*/
+    margin-top: 10px;
     display: block;
     vertical-align: top;
 }
