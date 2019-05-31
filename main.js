@@ -17,6 +17,7 @@ rating = { 1: "★☆☆☆☆", 2: "★★☆☆☆", 3: "★★★☆☆", 4: 
 // some globals:
 var map;
 var climbs = false;
+var allowQuickDelete = false;
 
 function initLeafletMap() {
     map = L.map('mapid');
@@ -116,6 +117,7 @@ function sortTable(e)
 
 /*********** FILTER List: ***********/
 
+
 function doFilter()
 {
     f = $("f_text").value.trim().toLowerCase();
@@ -208,6 +210,20 @@ function clickOnClimb(climb, openPopup=false) // in map or in list
     climb.tablerow.scrollIntoViewIfNeeded({behavior: "smooth"});
 }
 
+function deleteClimb(button, nr)
+{
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log(this.responseText);
+            // Hack: remove just the Popup
+            button.parentNode.parentNode.parentNode.parentNode.remove();
+        }
+    };
+    xhttp.open("GET", "delete_climb.php?id=" + nr, true);
+    xhttp.send();
+}
+
 function loadClimbs() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
@@ -246,7 +262,10 @@ function loadClimbs() {
 
                 // Marker:
                 m = L.marker([climb.end_lat, climb.end_lon], {icon: finishIcon}).addTo(map);
-                m.bindPopup("<a href=\"nirvana.html?id=" + climb.id + "\" target=\"climb\">" + climb.name + "</a> "+ climb.id);
+                var delButton = allowQuickDelete ? (" <button onclick=\"deleteClimb(this, "+climb.id+")\">&times;</button>") : "";
+                // console.log(delButton);
+                m.bindPopup("<a href=\"nirvana.html?id=" + climb.id + "\" target=\"climb\">" + climb.name + "</a> "+
+                            climb.id + delButton);
                 m.climb = climb;
                 
                 // Table-Row:
