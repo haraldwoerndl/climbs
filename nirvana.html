@@ -52,7 +52,8 @@ makeStarsForm($('f_tarmac')).addEventListener('click', updateClimbStars);
 loadClimb(id);
 $('veloframe').src = "https://veloviewer.com/segments/" + id + "/embed2?default2d=y";
 $('stravaframe').src = "https://www.strava.com/segments/" + id + "/embed";
-
+if(!allowEdit)
+    $('editButton').remove();
 </script>
 </body>
 </html>

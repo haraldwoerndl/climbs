@@ -14,10 +14,12 @@ rating = { 1: "★☆☆☆☆", 2: "★★☆☆☆", 3: "★★★☆☆", 4: 
     ⛔🚫🚳🚶  🚴  ☹☺✓
 */
 
+// To make everything editable (client side security ☹), change this to true:
+var allowEdit = true;
+
 // some globals:
 var map;
 var climbs = false;
-var allowQuickDelete = false;
 
 function initLeafletMap() {
     map = L.map('mapid');
@@ -262,7 +264,7 @@ function loadClimbs() {
 
                 // Marker:
                 m = L.marker([climb.end_lat, climb.end_lon], {icon: finishIcon}).addTo(map);
-                var delButton = allowQuickDelete ? (" <button onclick=\"deleteClimb(this, "+climb.id+")\">&times;</button>") : "";
+                var delButton = allowEdit ? (" <button onclick=\"deleteClimb(this, "+climb.id+")\">&times;</button>") : "";
                 // console.log(delButton);
                 m.bindPopup("<a href=\"nirvana.html?id=" + climb.id + "\" target=\"climb\">" + climb.name + "</a> "+
                             climb.id + delButton);
