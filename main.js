@@ -218,8 +218,8 @@ function deleteClimb(button, nr)
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             console.log(this.responseText);
-            // Hack: remove just the Popup
-            button.parentNode.parentNode.parentNode.parentNode.remove();
+            // Hack: remove just the Popup (doesn't work)
+            button.parentNode.parentNode.parentNode.remove();
         }
     };
     xhttp.open("GET", "delete_climb.php?id=" + nr, true);
