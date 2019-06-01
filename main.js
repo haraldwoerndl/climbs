@@ -423,10 +423,10 @@ function startEditing(button) {
         $('f_schoenheit').parentNode.classList.remove('editmode');
         $('f_tarmac').parentNode.classList.remove('editmode');
 
-        oneClimb.name = $('i_name').innerHTML;
-        oneClimb.beschreibung = $('i_descr').innerHTML;
-        oneClimb.rules = $('i_rules').innerHTML;
-        oneClimb.region = $('i_region').innerHTML;
+        oneClimb.name = $('i_name').textContent;
+        oneClimb.beschreibung = $('i_descr').textContent;
+        oneClimb.rules = $('i_rules').textContent;
+        oneClimb.region = $('i_region').textContent;
 
         button.disabled = true;
         button.editmode = false;
