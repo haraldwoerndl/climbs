@@ -424,10 +424,10 @@ function startEditing(button) {
         $('f_tarmac').parentNode.classList.remove('editmode');
 
         oneClimb.name = $('i_name').textContent;
-        oneClimb.beschreibung = $('i_descr').textContent;
-        $('i_descr').innerHTML = oneClimb.beschreibung;
         oneClimb.rules = $('i_rules').textContent;
         oneClimb.region = $('i_region').textContent;
+        oneClimb.beschreibung = $('i_descr').innerText.replace(/\n/g, '<br>');
+        $('i_descr').innerHTML = oneClimb.beschreibung;
 
         button.disabled = true;
         button.editmode = false;
@@ -436,11 +436,12 @@ function startEditing(button) {
     else
     {
         makeEditable($('i_name'));
-        makeEditable($('i_descr'));
-        $('i_descr').textContent = oneClimb.beschreibung;   // make HTML to Text
-        // console.log(oneClimb.beschreibung);
         makeEditable($('i_rules'));
         makeEditable($('i_region'));
+        makeEditable($('i_descr'));
+        $('i_descr').innerText = oneClimb.beschreibung.replace(/<br>/g, "\n");   // make HTML to Text
+        // console.log(oneClimb.beschreibung);
+
         $('f_haerte').parentNode.classList.add('editmode');
         $('f_schoenheit').parentNode.classList.add('editmode');
         $('f_tarmac').parentNode.classList.add('editmode');
