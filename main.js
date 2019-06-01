@@ -349,7 +349,7 @@ function loadClimb(id) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
+            // console.log(this.responseText);
             climb = JSON.parse(this.responseText);
 
             // Table-Row:
@@ -439,7 +439,8 @@ function startEditing(button) {
         makeEditable($('i_rules'));
         makeEditable($('i_region'));
         makeEditable($('i_descr'));
-        $('i_descr').innerText = oneClimb.beschreibung.replace(/<br>/g, "\n");   // make HTML to Text
+        if(oneClimb.beschreibung)
+            $('i_descr').innerText = oneClimb.beschreibung.replace(/<br>/g, "\n");   // make HTML to Text
         // console.log(oneClimb.beschreibung);
 
         $('f_haerte').parentNode.classList.add('editmode');
