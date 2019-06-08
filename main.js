@@ -401,14 +401,14 @@ function saveChanges(button, climb)
 }
 
 function updateClimbStars() {
-    if(!$('editButton').editmode) {
-        document.forms.f_haerte.elements.stars.value = oneClimb.haerte;
-        document.forms.f_schoenheit.elements.stars.value = oneClimb.schoenheit;
-        document.forms.f_tarmac.elements.stars.value = oneClimb.tarmac;
-    } else {
+    if(allowEdit && $('editButton').editmode) {
         oneClimb.haerte = document.forms.f_haerte.elements.stars.value;
         oneClimb.schoenheit = document.forms.f_schoenheit.elements.stars.value;
         oneClimb.tarmac = document.forms.f_tarmac.elements.stars.value;
+    } else {
+        document.forms.f_haerte.elements.stars.value = oneClimb.haerte;
+        document.forms.f_schoenheit.elements.stars.value = oneClimb.schoenheit;
+        document.forms.f_tarmac.elements.stars.value = oneClimb.tarmac;
     }
 }
 
