@@ -13,6 +13,11 @@ th, td {
 	margin: 1ex 0 1ex 0;
     min-width: 100%;
 }
+#listenhead {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+}
 #liste tr {
 	border-bottom: 1px dotted gray;
 }

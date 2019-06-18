@@ -74,10 +74,8 @@ function sortTable(e)
 {
     col = e.target.sortKey;
     
-    table = $("liste");
+    table = $("listenbody");
     rows = table.rows;
-    tbody = table.childNodes[0];
-    titleRow = rows[0];
     
     direction *= -1;
     
@@ -86,8 +84,6 @@ function sortTable(e)
         r[i] = rows[i];
 
     r.sort(function(a, b) {
-        if(a == titleRow) return -1;    // Keep Title on Top
-        if(b == titleRow) return +1;
 
         if(col == 1 || col == 2) {  // Text order
             x = a.childNodes[col].innerHTML.toLowerCase();
@@ -113,7 +109,7 @@ function sortTable(e)
         return 0;
     });
     for (i = 0; i < rows.length; i++) {
-        tbody.appendChild(r[i]);
+        table.appendChild(r[i]);
     }
 }
 
@@ -137,11 +133,10 @@ function doFilter()
     max_a = Number(document.forms.f_amax.elements.stars.value);
     legal = Number(document.forms.f_zufahrt.elements.legal.value);  // 1=legal, 2=illegal, 3=beide
 
-    var table, rows, name, beschr, wot, display;
-    table = $("liste");
-    rows = table.rows;
+    var rows, name, beschr, wot, display;
+    rows = $("listenbody").rows;
     changed = false;
-    for (i = 1; i < rows.length; i++) {
+    for (i = 0; i < rows.length; i++) {
         climb = rows[i].climb;
 
         try {
@@ -209,7 +204,9 @@ function clickOnClimb(climb, openPopup=false) // in map or in list
     if(openPopup)
         climb.m.openPopup();
     climb.tablerow.classList.add('selected');
-    climb.tablerow.scrollIntoViewIfNeeded({behavior: "smooth"});
+    climb.tablerow.scrollIntoView({behavior: "smooth", block: "center"});
+    
+    map.flyToBounds(selectedPL.getBounds(), {maxZoom: Math.max(13, map._zoom)});
 }
 
 function deleteClimb(button, nr)
@@ -231,17 +228,14 @@ function loadClimbs() {
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
 
-            t = $("liste");
-            row = t.insertRow(-1);
-            row.innerHTML =
-               '<th>Nr.</th><th>Name</th><th>Region</th><th>&#216;&nbsp;Steigung\
-                </th><th>Höhenmeter</th><th>Strecke\
-                </th><th>Härte</th><th>Schönheit</th><th>Belag</th><th>Legal</th>';
+          
+            thr = $("listenhead").rows[0];
             for(i=0; i<10; i++) {
-                row.childNodes[i].addEventListener('click', sortTable);
-                row.childNodes[i].sortKey=i;
+                thr.childNodes[i].addEventListener('click', sortTable);
+                thr.childNodes[i].sortKey=i;
             }
-            
+            tb = $("listenbody");
+
             var finishIcon = L.icon({
                                     iconUrl: 'icons8-finish-flag-48.png',
                                     iconSize:     [24, 24],
@@ -271,7 +265,7 @@ function loadClimbs() {
                 m.climb = climb;
                 
                 // Table-Row:
-                row = t.insertRow(-1);
+                row = tb.insertRow(-1);
                 row.insertCell(-1).innerHTML = climb.id;
                 row.insertCell(-1).innerHTML = "<a href=\"nirvana.html?id=" + climb.id + "\" target=\"climb\">" + climb.name + "</a>";
                 row.insertCell(-1).innerHTML = climb.region ? climb.region : "-";
