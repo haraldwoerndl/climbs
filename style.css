@@ -60,7 +60,7 @@ th, td {
 	text-align: center;
 }
 #liste tr td:nth-child(1n+7) { /* stars */
-    font-size: 50%;
+    font-size: 70%;
     padding-top: 7px;
 }
 #liste tr td:nth-child(10) { /* Lega */
