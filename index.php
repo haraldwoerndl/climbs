@@ -1,3 +1,13 @@
+<?php
+session_start();
+if(isSet($_GET["logout"]))
+{
+	session_unset();
+	session_destroy();
+	header("Location: index.php");
+	exit();
+}
+?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -17,9 +27,13 @@
   </head>
 <body>
 <!-- My private climb page (c) 2019 by Harald Wörndl-Aichriedler -->
+<?php
+	// creates/sets global: $benutzer $isAdmin $benutzerName
+	require 'auth.php';
+	authenticationHTML(true);
+?>
 
 <div id="layout">
-
 <div id="head">
     <h1>Climbs in Vienna</h1>
 </div>

@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -7,8 +8,16 @@
     <script src="main.js"></script>
   </head>
 <body class="nirvana">
-
+<?php
+	// creates/sets global: $benutzer $isAdmin $benutzerName
+	require 'auth.php';
+	authenticationHTML(false);	// no login fields
+?>
 <button id="editButton" onclick="startEditing(this)">edit</button>
+<script>
+	if(!isAdmin) $('editButton').remove();
+</script>
+
 
 <div id="infolayout">
 <div id="chead"><h1 id="i_name"></h1></div>
