@@ -156,7 +156,7 @@ th, td {
     overflow: scroll;
 }
 
-/*** nirvana.html: ***/
+/*** nirvana.php: ***/
 
 h1 {
     margin: 8px;
@@ -255,4 +255,21 @@ unused {
 }
 div.editmode ~ #tipphilfe {
     display: inline-block;
+}
+
+/*** auth.php: ***/
+#lockicon {
+	position: absolute;
+	right: 5px;
+	top: 5px;
+	z-index: 501;
+}
+#loginbox {
+	position: absolute;
+	background: white;
+	padding: 10px;
+	right: 5px;
+	top: 25px;
+	z-index: 500;
+	visibility: hidden;
 }

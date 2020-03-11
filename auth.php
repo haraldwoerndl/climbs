@@ -19,6 +19,9 @@
    	INSERT INTO user (user, passhash, name, isAdmin)
    	VALUES("admin", "$2y$10$.SZaP77H0X29xZzz5fMC1e4ybGZOQZ3PgOfqjKhJVbrH2.CqLYU/2",
    	"Administrator", 1);
+   	
+   	INSERT INTO user (user, passhash, name, isAdmin)
+    VALUES("harald", "$2y$10$p31CZdQwFdwLaO.08e14DO2WlDoh1QFf4AZJTjQl0WAp8wN87wJUK", "Harald", 1);
 */
 global $benutzer;
 global $benutzerName;

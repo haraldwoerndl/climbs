@@ -1,5 +1,9 @@
 <?php
-    // No security YET!
+    session_start();
+    // creates/sets global: $benutzer $isAdmin $benutzerName
+    require 'auth.php';
+    authenticationCheck(true, true);   // user and admin
+    
     if(!isset($_GET["id"]))
         die("No id set");
 

@@ -1,4 +1,9 @@
 <?php
+session_start();
+// creates/sets global: $benutzer $isAdmin $benutzerName
+require 'auth.php';
+authenticationCheck(true, false);   // user:yes, admin:no
+
 // get Post-Data directly:
 $c = json_decode(file_get_contents('php://input'));
 

@@ -15,7 +15,7 @@ rating = { 1: "★☆☆☆☆", 2: "★★☆☆☆", 3: "★★★☆☆", 4: 
 */
 
 // To make everything editable (client side security ☹), change this to true:
-var allowEdit = true;
+function allowEdit() { return isAdmin; }	// us global variable
 
 // some globals:
 var map;
@@ -258,16 +258,16 @@ function loadClimbs() {
 
                 // Marker:
                 m = L.marker([climb.end_lat, climb.end_lon], {icon: finishIcon}).addTo(map);
-                var delButton = allowEdit ? (" <button onclick=\"deleteClimb(this, "+climb.id+")\">&times;</button>") : "";
+                var delButton = allowEdit() ? (" <button onclick=\"deleteClimb(this, "+climb.id+")\">&times;</button>") : "";
                 // console.log(delButton);
-                m.bindPopup("<a href=\"nirvana.html?id=" + climb.id + "\" target=\"climb\">" + climb.name + "</a> "+
+                m.bindPopup("<a href=\"nirvana.php?id=" + climb.id + "\" target=\"climb\">" + climb.name + "</a> "+
                             climb.id + delButton);
                 m.climb = climb;
                 
                 // Table-Row:
                 row = tb.insertRow(-1);
                 row.insertCell(-1).innerHTML = climb.id;
-                row.insertCell(-1).innerHTML = "<a href=\"nirvana.html?id=" + climb.id + "\" target=\"climb\">" + climb.name + "</a>";
+                row.insertCell(-1).innerHTML = "<a href=\"nirvana.php?id=" + climb.id + "\" target=\"climb\">" + climb.name + "</a>";
                 row.insertCell(-1).innerHTML = climb.region ? climb.region : "-";
                 row.insertCell(-1).innerHTML = climb.grade_avg;
                 row.insertCell(-1).innerHTML = Math.round(climb.elev_high - climb.elev_low); // climb.elev_gain; ist oft leer
@@ -334,8 +334,7 @@ function makeMyForms() {
 }
 
 
-/*** used by nirvana.html: ***/
-
+/*** used by nirvana.php: ***/
 
 var oneClimb = null;    // the climb which was loaded
 
@@ -365,6 +364,7 @@ function loadClimb(id) {
         }
     };
     xhttp.open("GET", "climbs.json.php?id=" + id, true);
+    xhttp.withCredentials = true;
     xhttp.send();
 }
 
@@ -395,7 +395,7 @@ function saveChanges(button, climb)
 }
 
 function updateClimbStars() {
-    if(allowEdit && $('editButton').editmode) {
+    if(allowEdit() && $('editButton').editmode) {
         oneClimb.haerte = document.forms.f_haerte.elements.stars.value;
         oneClimb.schoenheit = document.forms.f_schoenheit.elements.stars.value;
         oneClimb.tarmac = document.forms.f_tarmac.elements.stars.value;
@@ -443,4 +443,14 @@ function startEditing(button) {
         button.innerHTML = "save"
         button.editmode = true;
     }
+}
+
+
+/*** Functions for auth.php: ***/
+function clickLock() {
+	loginbox = $('loginbox');
+	if(loginbox.style.visibility === "hidden")
+		loginbox.style.visibility = "visible";
+	else
+		loginbox.style.visibility = "hidden";
 }
